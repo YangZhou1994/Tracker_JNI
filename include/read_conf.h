@@ -18,6 +18,6 @@ using namespace std;
  *  \param[OUT] buffer - file data.
  *  \return buffer length.
  */
-size_t readConfFile(const string& path, char* buffer);
+size_t readConfFile(const string &path, char *buffer);
 
 #endif  // _READ_CONF_H_
