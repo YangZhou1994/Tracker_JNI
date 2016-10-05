@@ -14,4 +14,4 @@ CMakeFiles
 *.so
 
 # The code of tracker is not open-sourced. Library instead is provided.
-!lib/libtracker.so
+!lib/libbasic_pedestrian_tracker.so

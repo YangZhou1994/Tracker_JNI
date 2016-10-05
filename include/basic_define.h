@@ -14,7 +14,7 @@
 
 #define VIDEO_URL_LEN 2048
 
-typedef struct _bb_t {
+typedef struct _bbox_t {
   int x;   // Left
   int y;   // Top
   int width;
@@ -24,15 +24,12 @@ typedef struct _bb_t {
 
 // typedef vector<BoundingBox> BBList;
 
-typedef struct _trajectory_t {
-  int id;              // It is only unique inside one video.
-  int traj_size;
-  // string video_url;
-  char video_url[VIDEO_URL_LEN];
-  int start_frame_idx;
+typedef struct _tracklet_t {
+  int tracklet_len_;
+  int start_frame_idx_;
   // BBList location_sequence;
   BoundingBox *location_sequence;
-} Trajectory;
+} Tracklet;
 
 // typedef vector<Track> TrackList;
 

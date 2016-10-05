@@ -53,7 +53,7 @@ class ObjTracking {
    *              It's not necessary to free the pointer, but you should
    *              assign NULL to it finally (see unittest/main.cpp).
    */
-  Trajectory *getTrajs(int &trajs_num);
+  Tracklet *getTrajs(int &trajs_num);
 
   /** \fn         getTargets
    *  \brief      To return the tracking results include the
