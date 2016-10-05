@@ -1,12 +1,25 @@
-cmake_minimum_required(VERSION 2.8.11)
-project(isee_basic_tracker)
+cmake_minimum_required(VERSION 2.8.7)
+project(basic_pedestrian_tracker)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (JAVA_HOME $ENV{JAVA_HOME} CACHE PATH "Home directory of Java Divelooment Toolkit (JDK).")
 
 link_directories(${PROJECT_SOURCE_DIR}/lib)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+add_subdirectory (jni lib)
 
-set (JAVA_HOME $ENV{JAVA_HOME} CACHE PATH "Home directory of Java Divelooment Toolkit (JDK).")
+set(TEST_VIDEO_PATH CACHE FILEPATH "File path of video for test.")
+add_subdirectory(test bin)
 
-add_subdirectory (src lib)
-
-install (FILES ${PROJECT_SOURCE_DIR}/lib/libtracker.so DESTINATION lib/video_decoder)
+install (FILES
+        ${PROJECT_SOURCE_DIR}/lib/libbasic_pedestrian_tracker.so
+        DESTINATION
+        lib)
+install (FILES
+        ${PROJECT_SOURCE_DIR}/include/ObjTracking.hpp
+        DESTINATION
+        include/isee_basic_pedestrian_tracker)
+install (FILES
+        ${PROJECT_SOURCE_DIR}/include/basic_define.h
+        DESTINATION
+        include/isee_basic_pedestrian_tracker)
