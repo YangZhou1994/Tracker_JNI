@@ -4,6 +4,8 @@
  *  \version 0.1
  *  \date    2016-07-26
  *  \email   da.li@cripac.ia.ac.cn
+ *
+ * Licensed under The MIT License [see LICENSE for details]
  */
 
 #ifndef _TRACKING_H_

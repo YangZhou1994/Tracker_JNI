@@ -1,3 +1,11 @@
+/** \file    tracking_jni.cpp
+ *  \brief   Implementation of JNI wrapper for object tracking.
+ *  \version 0.1
+ *  \date    2016-07-26
+ *  \email   da.li@cripac.ia.ac.cn kyu_115s@hotmail.com
+ *
+ * Licensed under The MIT License [see LICENSE for details]
+ */
 
 #include <cstdlib>
 #include <cstdio>
@@ -71,7 +79,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasi
       env->GetFieldID(tracklet_class,
                       "locationSequence",
                       "[Lorg/cripac/isee/pedestrian/tracking/Tracklet$BoundingBox;");
-  jfieldID start_frame_idx_field =
+  jfieldID start_frame_idxfield =
       env->GetFieldID(tracklet_class,
                       "startFrameIndex",
                       "I");
@@ -104,9 +112,9 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasi
     jobject j_tracklet = env->NewObject(tracklet_class, tracklet_constructor);
 
     // Create Java bounding box array with equal length with the length of current tracklet.
-    jobjectArray j_bboxes = env->NewObjectArray(tracklet.tracklet_len_, bbox_class, 0);
+    jobjectArray j_bboxes = env->NewObjectArray(tracklet.tracklet_len, bbox_class, 0);
     // Fill data of native bounding box into the Java array one by one.
-    for (int j = 0; j < tracklet.tracklet_len_; ++j) {
+    for (int j = 0; j < tracklet.tracklet_len; ++j) {
       // Create a Java bounding box.
       jobject j_bbox = env->NewObject(bbox_class, bbox_constructor);
       // Fill the x, y, width, height fields of the bounding box.
@@ -135,7 +143,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasi
     // Put the bounding box array to the locationSequence field of the Java tracklet.
     env->SetObjectField(j_tracklet, loc_seq_field, j_bboxes);
     // Set the startFrameIndex field of the Java tracklet.
-    env->SetIntField(j_tracklet, start_frame_idx_field, tracklet.start_frame_idx_);
+    env->SetIntField(j_tracklet, start_frame_idxfield, tracklet.start_frame_idx);
     // Insert the new tracklet into the Java tracklet array.
     env->SetObjectArrayElement(j_tracklets, i, j_tracklet);
     //TODO: release jbyte:j_tracklet and jbyteArray: j_bboxes
