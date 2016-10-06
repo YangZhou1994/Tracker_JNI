@@ -12,7 +12,6 @@
 #define _TRACKING_H_
 
 #include <string>
-using namespace std;
 
 #include "basic_define.h"
 
@@ -55,21 +54,7 @@ class ObjTracking {
    *              It's not necessary to free the pointer, but you should
    *              assign NULL to it finally (see unittest/main.cpp).
    */
-  Tracklet *getTrajs(int &trajs_num);
-
-  /** \fn         getTargets
-   *  \brief      To return the tracking results include the
-   *              bounding boxes and rgb data.
-   *  \param[OUT] trasks - tracking results.
-   *  \return     number of targets.
-   */
-  // int  getTargets(Track* tracks);
-
-  /** \fn         getTracksNum
-   *  \brief      To get the number of tracks.
-   *  \return     number of tracks.
-   */
-  // int  getTracksNum(void);
+  Trajectory *getTrajs(int &trajs_num);
 
   /** \fn    destroy
    *  \brief Release recourses.

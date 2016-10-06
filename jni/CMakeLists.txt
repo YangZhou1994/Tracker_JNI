@@ -1,4 +1,4 @@
-add_library (basic_pedestrian_tracker_jni SHARED tracker_jni.cpp)
+add_library(basic_pedestrian_tracker_jni SHARED tracker_jni.cpp ../test/pedestrian_tracker_test.cpp)
 
 set (CMAKE_C_CFLAGS "${CMAKE_C_CFLAGS} -fPIC")
 set (CMAKE_CXX_CFLAGS "${CMAKE_CXX_CFLAGS} -fPIC")

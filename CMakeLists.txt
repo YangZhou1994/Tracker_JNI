@@ -8,6 +8,9 @@ link_directories(${PROJECT_SOURCE_DIR}/lib)
 
 add_subdirectory (jni lib)
 
+set(TEST_VIDEO_PATH CACHE FILEPATH "File path of video for test.")
+add_subdirectory(test bin)
+
 install (FILES
         ${PROJECT_SOURCE_DIR}/lib/libbasic_pedestrian_tracker.so
         DESTINATION

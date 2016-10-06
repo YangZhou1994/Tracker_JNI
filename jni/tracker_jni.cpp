@@ -64,14 +64,14 @@ JNIEXPORT jint JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
 /*
  * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
  * Method:    getTargets
- * Signature: (J)[Lorg/cripac/isee/pedestrian/tracking/Tracklet;
+ * Signature: (J)[Lorg/cripac/isee/pedestrian/tracking/Trajectory;
  */
 JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasicTracker_getTargets
     (JNIEnv *env, jobject obj, jlong pointer) {
-  // Analyze Tracklet class in Java.
-  jclass tracklet_class = env->FindClass("org/cripac/isee/pedestrian/tracking/Tracklet");
+  // Analyze Trajectory class in Java.
+  jclass tracklet_class = env->FindClass("org/cripac/isee/pedestrian/tracking/Trajectory");
   if (tracklet_class == NULL) {
-    fprintf(stderr, "Error: Cannot find Java class: org/cripac/isee/pedestrian/tracking/Tracklet");
+    fprintf(stderr, "Error: Cannot find Java class: org/cripac/isee/pedestrian/tracking/Trajectory");
     return NULL;
   }
   jmethodID tracklet_constructor = env->GetMethodID(tracklet_class, "<init>", "()V");
@@ -100,21 +100,21 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasi
   // Get tracking results.
   ObjTracking *tracker = (ObjTracking *) pointer;
   int num_tracklets = 0;
-  Tracklet *tracklets = tracker->getTrajs(num_tracklets);
+  Trajectory *tracklets = tracker->getTrajs(num_tracklets);
 
   // Create Java tracklet array with equal length with local tracklet result list.
   jobjectArray j_tracklets = env->NewObjectArray((jsize) num_tracklets, tracklet_class, 0);
   // Fill data of native tracklets into the Java array one by one.
   for (int i = 0; i < num_tracklets; ++i) {
     // For current tracklet.
-    const Tracklet& tracklet = tracklets[i];
+    const Trajectory &tracklet = tracklets[i];
     // Create a Java tracklet.
     jobject j_tracklet = env->NewObject(tracklet_class, tracklet_constructor);
 
     // Create Java bounding box array with equal length with the length of current tracklet.
-    jobjectArray j_bboxes = env->NewObjectArray(tracklet.tracklet_len, bbox_class, 0);
+    jobjectArray j_bboxes = env->NewObjectArray(tracklet.traj_size, bbox_class, 0);
     // Fill data of native bounding box into the Java array one by one.
-    for (int j = 0; j < tracklet.tracklet_len; ++j) {
+    for (int j = 0; j < tracklet.traj_size; ++j) {
       // Create a Java bounding box.
       jobject j_bbox = env->NewObject(bbox_class, bbox_constructor);
       // Fill the x, y, width, height fields of the bounding box.

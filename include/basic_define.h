@@ -22,7 +22,7 @@
  * Each bounding box represents the location as well as the size
  * of a pedestrian in a frame.
  */
-typedef struct _bbox_t {
+typedef struct _bb_t {
   int x;   // Left
   int y;   // Top
   int width;
@@ -31,16 +31,18 @@ typedef struct _bbox_t {
 } BoundingBox;
 
 /**
- * @struct Tracklet
- * @brief Tracklet of a target pedestrian.
+ * @struct Trajectory
+ * @brief Trajectory of a target pedestrian.
  * A tracklet represents a series of appears of a target pedestrian
  * in a video.
  */
-typedef struct _tracklet_t {
-  int tracklet_len;
+typedef struct _trajectory_t {
+  int id;
+  int traj_size;
+  char video_url[VIDEO_URL_LEN];
   int start_frame_idx;
   // BBList location_sequence;
   BoundingBox *location_sequence;
-} Tracklet;
+} Trajectory;
 
 #endif // _BASIC_DEFINE_H_

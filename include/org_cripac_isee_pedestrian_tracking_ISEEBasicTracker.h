@@ -26,7 +26,7 @@ JNIEXPORT jint JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
 /*
  * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
  * Method:    getTargets
- * Signature: (J)[Lorg/cripac/isee/pedestrian/tracking/Tracklet;
+ * Signature: (J)[Lorg/cripac/isee/pedestrian/tracking/Trajectory;
  */
 JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_ISEEBasicTracker_getTargets
   (JNIEnv *, jobject, jlong);
