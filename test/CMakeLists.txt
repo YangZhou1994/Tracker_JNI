@@ -2,7 +2,7 @@ enable_testing()
 
 add_executable(pedestrian_tracker_test EXCLUDE_FROM_ALL pedestrian_tracker_test.cpp)
 
-target_include_directories(pedestrian_tracker_test PUBLIC ${PROJECT_SOURCE_DIR}/include)
+include_directories(pedestrian_tracker_test PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 target_link_libraries(pedestrian_tracker_test opencv_core opencv_highgui opencv_imgproc)
 

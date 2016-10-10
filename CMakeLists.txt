@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.7)
 project(basic_pedestrian_tracker)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -14,7 +14,7 @@ add_subdirectory(test bin)
 install (FILES
         ${PROJECT_SOURCE_DIR}/lib/libbasic_pedestrian_tracker.so
         DESTINATION
-        lib/isee_basic_pedestrian_tracker)
+        lib)
 install (FILES
         ${PROJECT_SOURCE_DIR}/include/ObjTracking.hpp
         DESTINATION
