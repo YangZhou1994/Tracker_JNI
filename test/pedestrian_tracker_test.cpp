@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   FILE *conf = fopen(argv[2], "rw");
   char *buf = (char *) malloc(BUF_SIZE);
   int len = fread(buf, 1, BUF_SIZE, conf);
-  free(buf);
+  printf("Read config file with len=%d\n", len);
 
   Mat frame;
   cap >> frame;
@@ -70,6 +70,8 @@ int main(int argc, char *argv[]) {
     waitKey(interval);
   }
   destroyWindow(windowName);
+
+  free(buf);
 
   return 0;
 }
