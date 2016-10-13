@@ -20,23 +20,27 @@ int main(int argc, char *argv[]) {
     printf("Usage: pedestrian_tracker_test path/to/test/video path/to/config/file\n");
     return 1;
   }
+  printf("Called with %s %s\n", argv[1], argv[2]);
 
   VideoCapture cap(argv[1]);
 
   FILE *conf = fopen(argv[2], "rw");
-  char buf[BUF_SIZE];
+  char *buf = (char *) malloc(BUF_SIZE);
   int len = fread(buf, 1, BUF_SIZE, conf);
+  free(buf);
 
   Mat frame;
   cap >> frame;
   if (frame.empty()) {
-    fprintf(stderr, "Cannot read video!\n");
+    fprintf(stderr, "Cannot read video %d!\n", argv[1]);
     return 2;
   }
   cap.release();
+  fprintf(stdout, "Video opened!\n");
 
   ObjTracking tracker;
   tracker.init(frame.cols, frame.rows, frame.channels(), buf, len);
+  fprintf(stdout, "Tracker initialized!\n");
 
   while (!frame.empty()) {
     tracker.doTrack(frame.data);
