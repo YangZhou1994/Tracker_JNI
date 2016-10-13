@@ -49,6 +49,9 @@ int main(int argc, char *argv[]) {
 
   int num_tracklets;
   Trajectory *tracklets = tracker.getTrajs(num_tracklets);
+  printf("Tracked %d pedestrians!\n", num_tracklets);
+  for (int i = 0; i < num_tracklets; ++i)
+    printf("\t%d -> %d\n", tracklets[i].start_frame_idx, tracklets[i].traj_size);
 
   // Display
   const char *windowName = "Tracking result";
@@ -67,7 +70,11 @@ int main(int argc, char *argv[]) {
         rectangle(frame, Rect(bbox.x, bbox.y, bbox.width, bbox.height), Scalar(255, 0, 0));
       }
     imshow(windowName, frame);
-    waitKey(interval);
+    int key_pressed = waitKey(interval);
+    if ((key_pressed & ((1 << 8) - 1)) == ' ') {
+      destroyWindow(windowName);
+      break;
+    }
   }
   destroyWindow(windowName);
 
