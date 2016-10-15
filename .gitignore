@@ -1,0 +1,17 @@
+# CLion files
+/.idea/
+
+# Eclipse files
+.cproject
+.project
+
+# Cmake files
+Makefile
+*.cmake
+CMakeCache.txt
+CMakeFiles
+# Binary files
+*.so
+
+# The code of tracker is not open-sourced. Library instead is provided.
+!lib/libbasic_pedestrian_tracker.so
