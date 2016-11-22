@@ -21,7 +21,9 @@
  */
 class ObjTracking {
  public:
-  ObjTracking() {}
+  ObjTracking() {
+    handle = 0;
+  }
   ~ObjTracking() {
     destroy();
   }
@@ -60,6 +62,11 @@ class ObjTracking {
    *  \brief Release recourses.
    */
   void destroy(void);
+
+// Modified by da.li on 2016/11/9
+ private:
+  long handle;
+// End
 
 };  // ObjTracking
 

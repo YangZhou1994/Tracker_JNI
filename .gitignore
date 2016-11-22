@@ -17,3 +17,9 @@ CMakeFiles
 
 # The code of tracker is not open-sourced. Library instead is provided.
 !lib/libbasic_pedestrian_tracker.so
+
+# Tracking results
+test_video/*.txt
+
+# Test videos
+test_video
