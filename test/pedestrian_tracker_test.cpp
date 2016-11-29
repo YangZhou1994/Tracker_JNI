@@ -43,6 +43,8 @@ int main(int argc, char *argv[]) {
     fgets(video_path, PATH_MAX, video_list);
     for (int i = strlen(video_path) - 1; i >= 0 && video_path[i] == '\n'; --i)
       video_path[i] = '\0';
+    if (strlen(video_path) == 0)
+      continue;
 
     fprintf(stdout, "Reading video %s...\n", video_path);
     VideoCapture cap(video_path);
@@ -59,18 +61,28 @@ int main(int argc, char *argv[]) {
     tracker.init(frame.cols, frame.rows, frame.channels(), buf, len);
     fprintf(stdout, "Tracker initialized!\n");
 
+    int start = 3500, end = 4200;
     int cnt = 0;
     while (!frame.empty()) {
       ++cnt;
-      tracker.doTrack(frame.data);
+//      imshow("Frame", frame);
+//      waitKey(1);
+      if (cnt > start) {
+        printf("%d\n", cnt);
+        tracker.doTrack(frame.data);
+      }
+      if (cnt > end)
+        break;
       cap >> frame;
     }
     fprintf(stdout, "Tracked on %d frames!\n", cnt);
+    cap.release();
 
     int num_tracklets;
     Trajectory *tracklets = tracker.getTrajs(num_tracklets);
     printf("Tracked %d pedestrians!\n", num_tracklets);
     for (int i = 0; i < num_tracklets; ++i) {
+      tracklets[i].start_frame_idx += start,
       printf("\t%d -> %d\n",
              tracklets[i].start_frame_idx,
              tracklets[i].start_frame_idx + tracklets[i].traj_size);
@@ -92,34 +104,39 @@ int main(int argc, char *argv[]) {
       fout << endl;
     }
     fout.close();
+    printf("Results saved!\n");
 
-//    // Display
-//    const char *windowName = "Tracking result";
-//    cap.open(argv[1]);
-//    int interval = 900 / cap.get(CV_CAP_PROP_FPS);
-//    int frame_idx = 0;
-//    while (true) {
-//      Mat frame;
-//      cap >> frame;
-//      if (frame.empty())
-//        break;
-//      ++frame_idx;
-//      cv::putText(frame, to_string(frame_idx), Point(200, 200), CV_FONT_BLACK, 3.0, Scalar(255, 0, 0));
-//      for (int i = 0; i < num_tracklets; ++i)
-//        if (tracklets[i].start_frame_idx <= frame_idx
-//            && tracklets[i].start_frame_idx + tracklets[i].traj_size > frame_idx) {
-//          const BoundingBox &bbox = tracklets[i].location_sequence[frame_idx - tracklets[i].start_frame_idx];
-//          rectangle(frame, Rect(bbox.x, bbox.y, bbox.width, bbox.height), Scalar(255, 0, 0));
-//        }
-//      imshow(windowName, frame);
-//      int key_pressed = waitKey(interval);
-//      if ((key_pressed & ((1 << 8) - 1)) == ' ') {
-//        destroyWindow(windowName);
-//        break;
-//      }
-//    }
-//    destroyWindow(windowName);
-
+    // Display
+    const char *windowName = "result";
+    cap.open(video_path);
+    int interval = 900 / cap.get(CV_CAP_PROP_FPS);
+    int frame_idx = 0;
+    while (true) {
+      Mat frame;
+      cap >> frame;
+      ++frame_idx;
+      if (frame.empty())
+        continue;
+      if (frame_idx <= start) {
+//        printf("%d\n", frame_idx);
+        continue;
+      }
+      cv::putText(frame, to_string(frame_idx), Point(200, 200), CV_FONT_BLACK, 3.0, Scalar(255, 0, 0));
+      for (int i = 0; i < num_tracklets; ++i)
+        if (tracklets[i].start_frame_idx <= frame_idx
+            && tracklets[i].start_frame_idx + tracklets[i].traj_size > frame_idx) {
+          const BoundingBox &bbox = tracklets[i].location_sequence[frame_idx - tracklets[i].start_frame_idx];
+          rectangle(frame, Rect(bbox.x, bbox.y, bbox.width, bbox.height), Scalar(255, 0, 0));
+        }
+      imshow(windowName, frame);
+      waitKey(1);
+      int key_pressed = waitKey(interval);
+      if ((key_pressed & ((1 << 8) - 1)) == ' ') {
+        destroyWindow(windowName);
+        break;
+      }
+    }
+    destroyWindow(windowName);
     cap.release();
   }
   free(buf);

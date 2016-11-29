@@ -10,6 +10,7 @@ Makefile
 *.cmake
 CMakeCache.txt
 CMakeFiles
+cmake-build-debug
 # Binary files
 *.so
 # Swap files

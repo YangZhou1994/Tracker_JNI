@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+
 #include "ObjTracking.hpp"
 
 extern "C" {
@@ -47,7 +48,7 @@ getTargets(ObjTracking *tracker,
 }
 
 void
-free(ObjTracking *tracker) {
+freeTracker(ObjTracking *tracker) {
   delete tracker;
 }
 }
