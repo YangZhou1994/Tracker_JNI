@@ -7,6 +7,10 @@
 #include "ObjTracking.hpp"
 
 extern "C" {
+
+#include <stdlib.h>
+#include <stdio.h>
+
 ObjTracking *
 init(int width,
      int height,
