@@ -24,3 +24,11 @@ test_video/*.txt
 
 # Test videos
 test_video
+
+# Codeblocks files.
+basic_pedestrian_tracker.cbp
+
+bin/
+build/
+lib/c/
+lib/jni/

@@ -12,17 +12,17 @@
 #include <string>
 #include <jni.h>
 
-#include "org_cripac_isee_pedestrian_tracking_ISEEBasicTracker.h"
+#include "org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker.h"
 #include "ObjTracking.hpp"
 
 using namespace std;
 
 /*
- * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
+ * Class:     org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker
  * Method:    initialize
  * Signature: (III[B)J
  */
-JNIEXPORT jlong JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_initialize
+JNIEXPORT jlong JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_initialize
     (JNIEnv *env, jobject obj, jint width, jint height, jint num_channels, jbyteArray jbytes_conf) {
   // Get number of bytes of the configuration file.
   jsize buffer_len = (env)->GetArrayLength(jbytes_conf);
@@ -45,11 +45,11 @@ JNIEXPORT jlong JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_in
 }
 
 /*
- * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
+ * Class:     org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker
  * Method:    feedFrame
  * Signature: (J[B)I
  */
-JNIEXPORT jint JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_feedFrame
+JNIEXPORT jint JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_feedFrame
     (JNIEnv *env, jobject obj, jlong tracker_pointer, jbyteArray j_frame) {
   ObjTracking *tracker = (ObjTracking *) tracker_pointer;
   jsize buffer_len = (env)->GetArrayLength(j_frame);
@@ -64,32 +64,32 @@ JNIEXPORT jint JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_fee
 }
 
 /*
- * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
+ * Class:     org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker
  * Method:    getTargets
- * Signature: (J)[Lorg/cripac/isee/pedestrian/tracking/Tracklet;
+ * Signature: (J)[Lorg/cripac/isee/alg/pedestrian/tracking/Tracklet;
  */
-JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_getTargets
+JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_getTargets
     (JNIEnv *env, jobject obj, jlong pointer) {
   // Analyze Trajectory class in Java.
-  jclass tracklet_class = env->FindClass("org/cripac/isee/pedestrian/tracking/Tracklet");
+  jclass tracklet_class = env->FindClass("org/cripac/isee/alg/pedestrian/tracking/Tracklet");
   if (tracklet_class == NULL) {
-    fprintf(stderr, "Error: Cannot find Java class: org/cripac/isee/pedestrian/tracking/Tracklet");
+    fprintf(stderr, "Error: Cannot find Java class: org/cripac/isee/alg/pedestrian/tracking/Tracklet");
     return NULL;
   }
   jmethodID tracklet_constructor = env->GetMethodID(tracklet_class, "<init>", "()V");
   jfieldID loc_seq_field =
       env->GetFieldID(tracklet_class,
                       "locationSequence",
-                      "[Lorg/cripac/isee/pedestrian/tracking/Tracklet$BoundingBox;");
+                      "[Lorg/cripac/isee/alg/pedestrian/tracking/Tracklet$BoundingBox;");
   jfieldID start_frame_idxfield =
       env->GetFieldID(tracklet_class,
                       "startFrameIndex",
                       "I");
 
   // Analyze BoundingBox class in Java.
-  jclass bbox_class = env->FindClass("org/cripac/isee/pedestrian/tracking/Tracklet$BoundingBox");
+  jclass bbox_class = env->FindClass("org/cripac/isee/alg/pedestrian/tracking/Tracklet$BoundingBox");
   if (bbox_class == NULL) {
-    fprintf(stderr, "Error:Can't find Class:org/cripac/isee/pedestrian/tracking/Tracklet$BoundingBox");
+    fprintf(stderr, "Error:Can't find Class:org/cripac/isee/alg/pedestrian/tracking/Tracklet$BoundingBox");
     return NULL;
   }
   jmethodID bbox_constructor = env->GetMethodID(bbox_class, "<init>", "()V");
@@ -154,11 +154,11 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTra
 }
 
 /*
- * Class:     org_cripac_isee_pedestrian_tracking_ISEEBasicTracker
+ * Class:     org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker
  * Method:    free
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_cripac_isee_pedestrian_tracking_BasicTracker_free
+JNIEXPORT void JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_free
     (JNIEnv *env, jobject obj, jlong p) {
   delete (ObjTracking *)p;
 }
