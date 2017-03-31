@@ -12,7 +12,7 @@
 #include <string>
 #include <jni.h>
 
-#include "org_cripac_isee_alg_pedestrian_tracking_ISEEBasicTracker.h"
+#include "jnitracker.h"
 #include "ObjTracking.hpp"
 
 using namespace std;
