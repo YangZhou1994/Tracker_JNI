@@ -5,6 +5,7 @@
 
 #include "ObjTracking.hpp"
 #include <cstdio>
+#include <cstdlib>
 
 #define BUF_SIZE 10000
 
@@ -12,13 +13,13 @@ int main(int argc, char *argv[]) {
 
   FILE *file = fopen(argv[1], "r");
   char *conf = (char *) malloc(BUF_SIZE);
-  int read_cnt = fread(conf, sizeof(char), BUF_SIZE, file);
+  size_t read_cnt = fread(conf, sizeof(char), BUF_SIZE, file);
 
   printf("Create ObjTracking...\n");
   ObjTracking tracking;
 
   printf("Init ObjTracking...\n");
-  tracking.init(1000, 1000, 3, conf, read_cnt);
+  tracking.init(1000, 1000, 3, conf, (int) read_cnt);
 
   printf("ObjTracking initialized successfully!\n");
   free(conf);

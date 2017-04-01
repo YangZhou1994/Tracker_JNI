@@ -38,8 +38,10 @@ JNIEXPORT jlong JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracke
 
   if (!res) {
     fprintf(stderr, "Error: The tracker initialization FAILED!\n");
+    fflush(stdout), fflush(stderr);
     return (jlong)NULL;
   } else {
+    fflush(stdout), fflush(stderr);
     return (jlong)tracker;
   }
 }
@@ -60,6 +62,7 @@ JNIEXPORT jint JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker
   if (!res) {
     return -1;
   }
+  fflush(stdout), fflush(stderr);
   return 0;
 }
 
@@ -74,6 +77,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_Basi
   jclass tracklet_class = env->FindClass("org/cripac/isee/alg/pedestrian/tracking/Tracklet");
   if (tracklet_class == NULL) {
     fprintf(stderr, "Error: Cannot find Java class: org/cripac/isee/alg/pedestrian/tracking/Tracklet");
+    fflush(stdout), fflush(stderr);
     return NULL;
   }
   jmethodID tracklet_constructor = env->GetMethodID(tracklet_class, "<init>", "()V");
@@ -90,6 +94,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_Basi
   jclass bbox_class = env->FindClass("org/cripac/isee/alg/pedestrian/tracking/Tracklet$BoundingBox");
   if (bbox_class == NULL) {
     fprintf(stderr, "Error:Can't find Class:org/cripac/isee/alg/pedestrian/tracking/Tracklet$BoundingBox");
+    fflush(stdout), fflush(stderr);
     return NULL;
   }
   jmethodID bbox_constructor = env->GetMethodID(bbox_class, "<init>", "()V");
@@ -150,6 +155,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_Basi
     env->DeleteLocalRef(j_tracklet);
     env->DeleteLocalRef(j_bboxes);
   }
+  fflush(stdout), fflush(stderr);
   return j_tracklets;
 }
 
@@ -161,4 +167,5 @@ JNIEXPORT jobjectArray JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_Basi
 JNIEXPORT void JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_free
     (JNIEnv *env, jobject obj, jlong p) {
   delete (ObjTracking *)p;
+  fflush(stdout), fflush(stderr);
 }
