@@ -27,14 +27,13 @@ JNIEXPORT jlong JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracke
   // Get number of bytes of the configuration file.
   jsize buffer_len = (env)->GetArrayLength(jbytes_conf);
   // Create a native buffer for the configuration file.
-  jbyte *conf_buffer = new jbyte[buffer_len];
   // Retrieve bytes from Java to local.
-  env->GetByteArrayRegion(jbytes_conf, 0, buffer_len, conf_buffer);
+  jbyte *conf_buffer = env->GetByteArrayElements(jbytes_conf, NULL);
 
   // Initialize a tracker with bytes of the given configuration file.
   ObjTracking *tracker = new ObjTracking;
   int res = tracker->init(width, height, num_channels, (const char *) conf_buffer, buffer_len);
-  delete[] conf_buffer;
+  env->ReleaseByteArrayElements(jbytes_conf, conf_buffer, 0);
 
   if (!res) {
     fprintf(stderr, "Error: The tracker initialization FAILED!\n");
@@ -54,11 +53,9 @@ JNIEXPORT jlong JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracke
 JNIEXPORT jint JNICALL Java_org_cripac_isee_alg_pedestrian_tracking_BasicTracker_feedFrame
     (JNIEnv *env, jobject obj, jlong tracker_pointer, jbyteArray j_frame) {
   ObjTracking *tracker = (ObjTracking *) tracker_pointer;
-  jsize buffer_len = (env)->GetArrayLength(j_frame);
-  jbyte *frame = new jbyte[buffer_len];
-  env->GetByteArrayRegion(j_frame, 0, buffer_len, frame);
+  jbyte *frame = env->GetByteArrayElements(j_frame, NULL);
   int res = tracker->doTrack((const unsigned char *) (frame));
-  delete[](frame);
+  env->ReleaseByteArrayElements(j_frame, frame, 0);
   if (!res) {
     return -1;
   }
