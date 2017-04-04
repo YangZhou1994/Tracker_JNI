@@ -32,3 +32,4 @@ bin/
 build/
 lib/c/
 lib/jni/
+Testing/

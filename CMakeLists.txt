@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.7)
 project(basic_pedestrian_tracker)
 
+enable_testing()
+
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set (JAVA_HOME $ENV{JAVA_HOME} CACHE PATH "Home directory of Java Divelooment Toolkit (JDK).")
 

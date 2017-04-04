@@ -1,4 +1,3 @@
-enable_testing()
 
 add_executable(tracker_test EXCLUDE_FROM_ALL tracker_test.cpp)
 include_directories(tracker_test PUBLIC ${PROJECT_SOURCE_DIR}/include)
